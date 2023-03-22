@@ -1,0 +1,65 @@
+// 최초 렌더 시
+.fade-appear-to {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+.fade-appear-active {
+  transition: all 500ms ease-in;
+}
+
+// 텍스트
+.text-appear-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.text-appear-active {
+  transition: all 500ms linear;
+}
+
+// -----------------------------------------------
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+  transform: translateX(0);
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  transform: translateX(200px);
+  opacity: 0;
+}
+
+// 텍스트 영역
+.text-enter-active,
+.text-leave-active {
+  transition: all 0.8s linear;
+  transform: translateY(0);
+}
+.text-enter, .text-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+// 오브젝트 스타일
+.objet {
+  position: relative;
+  height: 100%;
+  &-circle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    // 이걸 해줘야 appear 클래스 정상작동
+    transition: all 500ms ease-in;
+  }
+
+  &-text {
+    position: absolute;
+    left: 20%;
+    bottom: 20%;
+    // 이걸 해줘야 appear 클래스 정상작동
+    transition: all 500ms ease-in;
+  }
+}
