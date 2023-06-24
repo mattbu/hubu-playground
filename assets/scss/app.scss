@@ -1,1 +1,108 @@
 @import "components/banner";
+@import "./login";
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+.form-control {
+  border-radius: 8px;
+  height: 40px;
+  padding: 12px 16px;
+
+  &::placeholder {
+    font-size: 14px;
+    color: #595959;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 4px rgba(1, 64, 153, 0.1);
+  }
+
+  &.form-input {
+    border-radius: 4px;
+    border-color: #dee2e9;
+    font-size: 14px;
+    color: #1a1a1a;
+
+    &::placeholder {
+      color: #616161;
+    }
+
+    &:focus {
+      border-radius: 6px;
+      border-color: #014099;
+    }
+
+    &:disabled {
+      background-color: #f0f0f0;
+    }
+  }
+}
+
+.custom-checkbox {
+  &.custom-control {
+    .custom-control-input {
+      &:checked {
+        ~ .custom-control-label {
+          &::before {
+            background-color: transparent;
+          }
+
+          &::after {
+            background-image: url("@/assets/icons/checkbox_active.svg");
+            background-size: auto;
+          }
+        }
+      }
+    }
+
+    .custom-control-label {
+      &::before {
+        border-color: #dee2e9;
+        border-radius: 4px;
+      }
+    }
+  }
+}
+
+.custom-spin-button {
+  width: 121px !important;
+  height: 36px;
+  background-color: #f4f4f5;
+  margin-left: 16px;
+  border: none;
+  padding: 0;
+  align-self: center;
+  font: {
+    size: 14px;
+    weight: 500;
+  }
+  line-height: 20px;
+  color: #18181b;
+
+  &:focus {
+    background-color: #f4f4f5;
+    box-shadow: none;
+  }
+  &.form-control {
+    &.focus {
+      background-color: #f4f4f5;
+      box-shadow: none;
+    }
+  }
+
+  output {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-color: #fff !important;
+  }
+
+  .btn {
+    width: 28px;
+    padding: 0;
+  }
+}

@@ -1,9 +1,10 @@
 <template>
-  <Tutorial/>
+  <!-- <Tutorial/> -->
+  <Hyundai />
 </template>
 
 <script>
 export default {
-  name: 'IndexPage'
-}
+  name: "IndexPage",
+};
 </script>

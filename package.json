@@ -13,8 +13,10 @@
     "bootstrap": "^4.6.2",
     "bootstrap-vue": "^2.22.0",
     "core-js": "^3.25.3",
+    "epubjs": "^0.3.93",
     "nuxt": "^2.15.8",
     "vue": "^2.7.10",
+    "vue-month-picker": "git+https://github.com/Buhyeonuk/vue-month-picker.git",
     "vue-server-renderer": "^2.7.10",
     "vue-ssr-carousel": "^2.1.0",
     "vue-template-compiler": "^2.7.10"

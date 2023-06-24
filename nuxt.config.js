@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "slide-anime-test2",
+    title: "hubu-playground",
     htmlAttrs: {
       lang: "en",
     },
@@ -18,7 +18,7 @@ export default {
   css: ["@/assets/scss/app.scss"],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [{ src: "@/plugins/vue-month-picker.js", mode: "client" }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
