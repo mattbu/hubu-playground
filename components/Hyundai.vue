@@ -18,49 +18,109 @@
         <b-col cols="12">
           <UiCard>
             <template #contents>
-              <b-container fluid>
-                <b-row align-h="between">
-                  <b-col cols="10" align-self="center" class="d-inline-flex">
-                    <h6
-                      style="
-                        font-size: 18px;
-                        font-weight: 600;
-                        line-height: 44px;
-                        margin-bottom: 0;
-                      "
-                    >
-                      {{ current.year }}년 {{ current.month }}월
-                    </h6>
-                    <b-form-spinbutton
-                      v-model="current.month"
-                      :formatter-fn="monthFomatter"
-                      min="1"
-                      max="12"
-                      class="custom-spin-button"
-                      inline
-                    >
-                      <template #decrement>
-                        <img
-                          src="@/assets/icons/spin_left.svg"
-                          alt="이전 달 버튼 아이콘"
-                        />
-                      </template>
-                      <template #increment>
-                        <img
-                          src="@/assets/icons/spin_right.svg"
-                          alt="다음 달 버튼 아이콘"
-                        />
-                      </template>
-                    </b-form-spinbutton>
-                  </b-col>
-                  <b-col cols="auto" align-self="center" class="text-right">
-                    <span
-                      style="color: #595959; font-size: 14px; line-height: 20px"
-                      >근무일수: 20일</span
-                    >
-                  </b-col>
-                </b-row>
-              </b-container>
+              <PagePerformanceProductionSearchFilter
+                @init-month="getMonth($event)"
+                @change-month="getMonth($event)"
+              />
+
+              <b-table-simple small responsive>
+                <!-- <colgroup>
+                  <col />
+                  <col />
+                </colgroup>
+                <colgroup>
+                  <col />
+                  <col />
+                  <col />
+                </colgroup>
+                <colgroup>
+                  <col />
+                  <col />
+                </colgroup> -->
+                <b-thead head-variant="dark">
+                  <b-tr>
+                    <b-th rowspan="2" colspan="2">호선</b-th>
+
+                    <b-th colspan="3">전월 이월분</b-th>
+                    <b-th colspan="3">04.03(월)</b-th>
+                    <b-th colspan="3">04.04(화)</b-th>
+                    <b-th colspan="3">04.05(수)</b-th>
+                  </b-tr>
+
+                  <b-tr>
+                    <b-th>블록</b-th>
+                    <b-th>매수</b-th>
+                    <b-th>비고</b-th>
+
+                    <b-th>블록</b-th>
+                    <b-th>매수</b-th>
+                    <b-th>비고</b-th>
+
+                    <b-th>블록</b-th>
+                    <b-th>매수</b-th>
+                    <b-th>비고</b-th>
+
+                    <b-th>블록</b-th>
+                    <b-th>매수</b-th>
+                    <b-th>비고</b-th>
+                  </b-tr>
+                </b-thead>
+
+                <b-tbody>
+                  <b-tr>
+                    <b-td rowspan="2">3295</b-td>
+                    <b-td rowspan="1">계획</b-td>
+                    <b-td>0</b-td>
+                    <b-td>0</b-td>
+                  </b-tr>
+
+                  <b-tr>
+                    <b-td rowspan="1">실적</b-td>
+                    <b-td rowspan="2">0</b-td>
+                    <b-td>0</b-td>
+                  </b-tr>
+
+                  <b-tr> </b-tr>
+
+                  <b-tr> </b-tr>
+
+                  <b-tr> </b-tr>
+                </b-tbody>
+
+                <b-tfoot>
+                  <b-tr>
+                    <b-th colspan="2" variant="secondary">부재매수(일일)</b-th>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                  </b-tr>
+
+                  <b-tr>
+                    <b-th colspan="2" variant="secondary">부재매수(누적)</b-th>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                    <b-td variant="secondary">0</b-td>
+                  </b-tr>
+                </b-tfoot>
+              </b-table-simple>
             </template>
           </UiCard>
         </b-col>
@@ -78,25 +138,36 @@ export default {
         startMonth: "",
         endMonth: "",
       },
-      current: {
-        year: 0,
-        month: 0,
-      },
+      current: {},
+      lastDayOfCurrentMonth: 0,
     };
   },
   computed: {},
-  mounted() {
-    this.getMonth();
-  },
-  methods: {
-    getMonth() {
-      const date = new Date();
-      this.current.year = date.getFullYear();
-      this.current.month = date.getMonth() + 1;
+  watch: {
+    lastDayOfCurrentMonth(val) {
+      console.log(val);
     },
-    monthFomatter() {
-      return `${this.current.month}월`;
+  },
+  mounted() {},
+  updated() {},
+  methods: {
+    getMonth(e) {
+      this.current = e.current;
+      this.lastDayOfCurrentMonth = e.lastDay;
     },
   },
 };
 </script>
+
+<style lang="scss">
+.table {
+  tbody {
+    tr {
+      td {
+        height: 60px;
+        border: 1px solid #dee2e9;
+      }
+    }
+  }
+}
+</style>

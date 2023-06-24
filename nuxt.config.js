@@ -21,7 +21,9 @@ export default {
   plugins: [{ src: "@/plugins/vue-month-picker.js", mode: "client" }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components: {
+    dirs: ["@/components"],
+  },
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: ["vue-ssr-carousel/nuxt"],
