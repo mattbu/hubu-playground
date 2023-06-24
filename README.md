@@ -1,4 +1,4 @@
-# slide-anime-test2
+# hubu-playground
 
 ## Build Setup
 
