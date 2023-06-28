@@ -12,13 +12,17 @@ export default {
       { name: "format-detection", content: "telephone=no" },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    script: [{ src: "/l10n.umd.js" }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ["@/assets/scss/app.scss"],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ src: "@/plugins/vue-month-picker.js", mode: "client" }],
+  plugins: [
+    { src: "@/plugins/vue-month-picker.js", mode: "client" },
+    { src: "@/plugins/gridjs-vue.js", mode: "client" },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: {
