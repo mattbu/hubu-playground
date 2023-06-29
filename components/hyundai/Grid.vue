@@ -1,14 +1,19 @@
 <template>
-  <grid
-    class="custom-grid"
-    :cols="columns"
-    :rows="rows"
-    :class-names="classNames"
-    :autoWidth="true"
-    :pagination="true"
-    :language="language"
-    :theme="'mermaid'"
-  />
+  <div>
+    <grid
+      ref="gridComponent"
+      class="custom-grid"
+      :cols="columns"
+      :rows="rows"
+      :class-names="classNames"
+      :autoWidth="true"
+      :pagination="true"
+      :language="language"
+      :theme="'mermaid'"
+    />
+    <button @click="addRow">추가하기</button>
+    <button @click="save">저장하기</button>
+  </div>
 </template>
 
 <script>
@@ -54,13 +59,11 @@ export default {
       columns: [
         {
           id: "index",
-          name: this.$gridjs?.html(`<i>순번</i>`), // 헤더에 html
-          formatter: (cell, row) => `Name: ${cell}`, // cell에 html
+          name: "순번", // 헤더에 html
         },
         {
           id: "team",
           name: "팀/협력사",
-          formatter: (cell, row) => this.$gridjs.html(`<b>${cell}</b>`),
         },
         { id: "shipId", name: "호선" },
         { id: "block", name: "단위블록" },
@@ -106,36 +109,60 @@ export default {
           heat: "",
         },
       ],
+      editedRows: [],
     };
   },
   mounted() {
-    console.log(this.$gridjs);
-    // 헤더에 html
-    // this.columns = [
-    //   {
-    //     id: "index",
-    //     name: this.$gridjs.html(`<i>순번</i>`),
-    //     formatter: (cell, row) => `Name: ${cell}`,
-    //   },
-    //   {
-    //     id: "team",
-    //     name: "팀/협력사",
-    //     formatter: (cell, row) => this.$gridjs.html(`<b>${cell}</b>`),
-    //   },
-    //   { id: "shipId", name: "호선" },
-    //   { id: "block", name: "단위블록" },
-    //   { id: "bay", name: "BAY" },
-    //   { id: "sched", name: "요구일" },
-    //   { id: "seq", name: "절단작업순서" },
-    //   { id: "etc", name: "비고" },
-    //   { id: "preProcessor", name: "전처리" },
-    //   { id: "stock", name: "강제입고" },
-    //   { id: "cut", name: "절단" },
-    //   { id: "press", name: "프레스" },
-    //   { id: "heat", name: "가열" },
-    // ];
+    this.columns.forEach((col) => {
+      col.data = (row) =>
+        this.$gridjs.h("input", {
+          className: `gridjs-cell ${col.id}-${row.index}`,
+          value: `${row[col.id]}`,
+          onInput: (e) => this.updateRowData(e, row, col.id),
+          onChange: (e) => this.editCell(e, row),
+        });
+    });
+
+    this.$nextTick(() => {
+      this.grid = this.$refs.gridComponent;
+      console.log(this.grid);
+    });
   },
-  methods: {},
+  methods: {
+    updateRowData(e, row, colId) {
+      row[colId] = e.target.value;
+      console.log(row[colId]);
+    },
+    save() {
+      console.log(this.editedRows);
+    },
+    editCell(e, rowData) {
+      this.editedRows.push(this.rows[rowData.index - 1]);
+      this.editedRows = this.editedRows.filter(
+        (editedRow, idx) => this.editedRows.indexOf(editedRow) === idx
+      );
+      console.log(this.editedRows);
+
+      this.$emit("edit-cell", this.editedRows);
+    },
+    addRow() {
+      this.rows.push({
+        index: this.rows.length + 1,
+        team: "",
+        shipId: "",
+        block: "",
+        bay: "",
+        sched: "",
+        seq: "",
+        etc: "",
+        preProcessor: "",
+        stock: "",
+        cut: "",
+        press: "",
+        heat: "",
+      });
+    },
+  },
 };
 </script>
 
