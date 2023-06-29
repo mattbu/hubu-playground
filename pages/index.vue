@@ -1,6 +1,8 @@
 <template>
   <!-- <Tutorial/> -->
-  <Hyundai />
+  <client-only>
+    <Hyundai />
+  </client-only>
 </template>
 
 <script>

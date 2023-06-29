@@ -92,6 +92,7 @@ export default {
           cut: "완",
           press: "완",
           heat: "",
+          onClick: (row) => console.log("로우클릭"),
         },
         {
           index: "2",
